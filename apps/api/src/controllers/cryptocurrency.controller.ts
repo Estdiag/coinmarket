@@ -29,11 +29,7 @@ const getLatestCryptocurrencies = async (req: Request, res: Response): Promise<v
       order: [['cmc_rank', 'ASC']]
     });
 
-    res.json({
-      success: true,
-      data: cryptocurrencies,
-      count: cryptocurrencies.length
-    });
+    res.json(cryptocurrencies);
   } catch (error) {
     res.status(500).json({
       success: false,

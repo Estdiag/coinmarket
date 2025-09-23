@@ -5,11 +5,14 @@ import { defineAssociations } from './models/associations';
 import cryptocurrencyRoutes from './routes/cryptocurrency.routes';
 import priceHistoryRoutes from './routes/pricehistory.routes';
 import { initSchedulers } from './schedulers/syncData.schedulers';
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(cors());
 
 app.use(express.json());
 

@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 import PriceHistory from '../models/pricehistory.model';
 import Crypto from '../models/cryptocurrency.model';
 import { coinMarketCapService } from './coinmarketcap.service';
-import { Cryptocurrency as CryptoAPI } from '../types/cryptocurrency.types';
+import { Cryptocurrency as CryptoAPI } from '@coinmarket/types';
 
 
 const saveDailyPriceHistory = async (cryptocurrencyData: CryptoAPI) => {

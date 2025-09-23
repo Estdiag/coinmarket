@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  CoinMarketCapResponse,
-  Cryptocurrency,
-} from '../types/cryptocurrency.types';
+import {Cryptocurrency, CoinMarketCapResponse} from '@coinmarket/types';
 import CryptocurrencyModel from '../models/cryptocurrency.model';
 
 const apiKey = process.env.COINMARKETCAP_API_KEY || '';
@@ -14,7 +11,7 @@ const getHeaders = () => ({
 });
 
  const getCryptos = async (
-  limit: number = 100
+  limit: number = 10
 ): Promise<Cryptocurrency[]> => {
   try {
     const response = await axios.get<CoinMarketCapResponse>(

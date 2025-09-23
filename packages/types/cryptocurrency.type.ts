@@ -35,3 +35,20 @@ export interface CoinMarketCapResponse {
   };
   data: Cryptocurrency[];
 }
+
+export type Coin = {
+  id: number;
+  cmc_rank: number;
+  createdAt: string;
+  updatedAt: string;
+  last_updated: string;
+  market_cap: number; 
+  name: string;
+  percent_change_1h: string;
+  percent_change_24h: string;
+  percent_change_7d: string;
+  price: string;
+  slug: string;
+  symbol: string;
+  volume_24h: string;
+};
