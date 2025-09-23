@@ -52,3 +52,8 @@ export type Coin = {
   symbol: string;
   volume_24h: string;
 };
+
+export interface HistoryDataItem extends Coin {
+  record_date: string;
+  cryptocurrency: Cryptocurrency;
+}

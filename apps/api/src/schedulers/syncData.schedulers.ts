@@ -9,7 +9,7 @@ const initSync = async () => {
 
 export const initSchedulers = async () => { 
   await initSync();  
-  cron.schedule('0 0 * * *', async () => {
+  cron.schedule('* * * * *', async () => {
     try {
       console.log('⏳ Iniciando actualización');
       await initSync();  // 👈 Esperar aquí también

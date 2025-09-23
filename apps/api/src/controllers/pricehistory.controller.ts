@@ -16,11 +16,7 @@ const getPriceHistory = async (req: Request, res: Response) => {
 
     const history = await priceHistoryService.getPriceHistory(cryptocurrencyId, days);
 
-    res.json({
-      success: true,
-      data: history,
-      count: history.length
-    });
+    res.json( history);
   } catch (error) {
     console.error('Error in getPriceHistory:', error);
     res.status(500).json({
