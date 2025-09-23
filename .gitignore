@@ -30,3 +30,9 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Turbo files
+.turbo/
+*-turbo.log*
+turbo.json
+.turborepo/
