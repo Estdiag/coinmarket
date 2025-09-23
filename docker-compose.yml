@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8
+    container_name: coinmarket_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: coinmarket
+      MYSQL_USER: api_user
+      MYSQL_PASSWORD: apipassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql      
+
+volumes:
+  db_data:
