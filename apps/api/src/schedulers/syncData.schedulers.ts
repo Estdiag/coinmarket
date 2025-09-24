@@ -9,10 +9,11 @@ const initSync = async () => {
 
 export const initSchedulers = async () => { 
   await initSync();  
-  cron.schedule('* * * * *', async () => {
+  const schedule = process.env.NODE_ENV === 'development' ? '0 0 * * *' : '* * * * *';
+  cron.schedule(schedule, async () => {
     try {
       console.log('⏳ Iniciando actualización');
-      await initSync();  // 👈 Esperar aquí también
+      await initSync();
       console.log('✅ Datos actualizados correctamente.');
     } catch (error) {
       console.error('❌ Error al actualizar datos:', error);
