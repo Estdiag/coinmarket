@@ -1,17 +1,13 @@
 import { Request, Response } from 'express';
 import { coinMarketCapService } from '../services/coinmarketcap.service';
-import Cryptocurrency from '../models/cryptocurrency.model';
+import CryptocurrencyModel from '../models/cryptocurrency.model';
 
 
 const getCryptocurrencyById = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = parseInt(req.params.id);
     const cryptocurrency = await coinMarketCapService.fetchCryptocurrencyById(id);
-
-    res.json({
-      success: true,
-      data: cryptocurrency
-    });
+    res.json(cryptocurrency);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -24,7 +20,7 @@ const getCryptocurrencyById = async (req: Request, res: Response): Promise<void>
 const getLatestCryptocurrencies = async (req: Request, res: Response): Promise<void> => {
   try {
     const limit = parseInt(req.query.limit as string) || 100;
-    const cryptocurrencies = await Cryptocurrency.findAll({
+    const cryptocurrencies = await CryptocurrencyModel.findAll({
       limit: limit,
       order: [['cmc_rank', 'ASC']]
     });
@@ -41,5 +37,5 @@ const getLatestCryptocurrencies = async (req: Request, res: Response): Promise<v
 
 export const cryptocurrencyController = {
   getCryptocurrencyById,
-  getLatestCryptocurrencies
-}
+  getLatestCryptocurrencies,
+ }

@@ -1,4 +1,6 @@
-export interface Cryptocurrency {
+import { CRYPTO_ALIAS, CRYPTO_ATTRIBUTES } from "./constants";
+
+export interface CryptocurrencyApi {
   id: number;
   name: string;
   symbol: string;
@@ -10,8 +12,6 @@ export interface Cryptocurrency {
   max_supply: number;
   last_updated: string;
   date_added: string;
-  tags: string[];
-  platform: any;
   quote: {
     USD: {
       price: number;
@@ -25,6 +25,21 @@ export interface Cryptocurrency {
   };
 }
 
+export interface CryptocurrencyDB {
+  id: number;
+  name: string;
+  symbol: string;
+  slug: string;
+  cmc_rank: number;
+  price: number;
+  volume_24h: number;
+  percent_change_1h: number;
+  percent_change_24h: number;
+  percent_change_7d: number;
+  market_cap: number;
+  last_updated: Date;
+}
+
 export interface CoinMarketCapResponse {
   status: {
     timestamp: string;
@@ -33,7 +48,7 @@ export interface CoinMarketCapResponse {
     elapsed: number;
     credit_count: number;
   };
-  data: Cryptocurrency[];
+  data: CryptocurrencyApi[];
 }
 
 export type Coin = {
@@ -42,7 +57,7 @@ export type Coin = {
   createdAt: string;
   updatedAt: string;
   last_updated: string;
-  market_cap: number; 
+  market_cap: number;
   name: string;
   percent_change_1h: string;
   percent_change_24h: string;
@@ -53,7 +68,7 @@ export type Coin = {
   volume_24h: string;
 };
 
-export interface HistoryDataItem extends Coin {
+export interface HistoryDataItem extends CryptocurrencyDB {
   record_date: string;
-  cryptocurrency: Cryptocurrency;
+  [CRYPTO_ALIAS]: { [K in typeof CRYPTO_ATTRIBUTES[number]]: string; }
 }

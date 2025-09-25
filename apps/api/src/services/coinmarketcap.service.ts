@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Cryptocurrency, CoinMarketCapResponse} from '@coinmarket/types';
+import { CryptocurrencyApi, CoinMarketCapResponse } from '@coinmarket/types';
 import CryptocurrencyModel from '../models/cryptocurrency.model';
 
 const apiKey = process.env.COINMARKETCAP_API_KEY || '';
@@ -10,9 +10,7 @@ const getHeaders = () => ({
   'Content-Type': 'application/json',
 });
 
- const getCryptos = async (
-  limit: number = 10
-): Promise<Cryptocurrency[]> => {
+const getCryptos = async (limit: number = 100): Promise<CryptocurrencyApi[]> => {
   try {
     const response = await axios.get<CoinMarketCapResponse>(
       `${baseURL}/cryptocurrency/listings/latest`,
@@ -29,17 +27,14 @@ const getHeaders = () => ({
   }
 };
 
- const fetchCryptocurrencyById = async (
-  id: number
-): Promise<Cryptocurrency> => {
+const fetchCryptocurrencyById = async (id: number): Promise<CryptocurrencyApi> => {
   try {
     const response = await axios.get<{
-      data: { [key: string]: Cryptocurrency };
+      data: { [key: string]: CryptocurrencyApi };
     }>(`${baseURL}/cryptocurrency/quotes/latest`, {
       headers: getHeaders(),
       params: { id, convert: 'USD' },
     });
-
     const cryptocurrency = response.data.data[id.toString()];
     if (!cryptocurrency)
       throw new Error(`Cryptocurrency with id ${id} not found`);
@@ -51,8 +46,7 @@ const getHeaders = () => ({
   }
 };
 
-
- const syncCryptocurrenciesToDB = async () => {
+const syncCryptocurrenciesToDB = async () => {
   try {
     const cryptocurrencies = await getCryptos(100);
 
@@ -82,7 +76,5 @@ const getHeaders = () => ({
 export const coinMarketCapService = {
   getCryptos,
   fetchCryptocurrencyById,
-  syncCryptocurrenciesToDB
+  syncCryptocurrenciesToDB,
 };
-
-

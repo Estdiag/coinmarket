@@ -28,8 +28,8 @@ const startServer = async (): Promise<void> => {
     
 
     await sequelize.sync({ 
-      force: true, 
-      // alter: process.env.NODE_ENV === 'development' 
+      // force: true, 
+      alter: process.env.NODE_ENV === 'development' 
     });
     console.log('✅ Base de datos sincronizada');
     

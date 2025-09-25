@@ -1,26 +1,12 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
-
-interface CryptocurrencyAttributes {
-  id: number;
-  name: string;
-  symbol: string;
-  slug: string;
-  cmc_rank: number;
-  price: number;
-  volume_24h: number;
-  percent_change_1h: number;
-  percent_change_24h: number;
-  percent_change_7d: number;
-  market_cap: number;
-  last_updated: Date;
-}
+import { CryptocurrencyDB } from '@coinmarket/types';
 
 interface CryptocurrencyCreationAttributes
-  extends Optional<CryptocurrencyAttributes, 'id'> {}
+  extends Optional<CryptocurrencyDB, 'id'> {}
 
-const Cryptocurrency = sequelize.define<
-  Model<CryptocurrencyAttributes, CryptocurrencyCreationAttributes>
+const CryptocurrencyModel = sequelize.define<
+  Model<CryptocurrencyDB, CryptocurrencyCreationAttributes>
 >(
   'Cryptocurrency',
   {
@@ -80,4 +66,4 @@ const Cryptocurrency = sequelize.define<
   }
 );
 
-export default Cryptocurrency;
+export default CryptocurrencyModel;
