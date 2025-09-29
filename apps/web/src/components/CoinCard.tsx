@@ -1,8 +1,8 @@
 import { Coin } from '@coinmarket/types';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
-  coin: Coin;
-  handleShowHistory: (coinId: number) => void;
+  coin: Coin;  
 };
 
 const formatCurrency = (value: string | number) => {
@@ -30,14 +30,22 @@ const getChangeClass = (valStr: string) => {
   return v >= 0 ? 'text-green-600' : 'text-red-500';
 };
 
-export default function CoinCard({ coin, handleShowHistory }: Props) {
+export default function CoinCard({ coin }: Props) {
   const { name, symbol, price, market_cap, percent_change_24h } = coin;
   const parsedPrice = Number(price);
+  const navigate = useNavigate();
+
+  const handleViewHistory = () => {
+    const coinId = coin.id.toString();
+    if (coinId.trim()) {
+      navigate(`/${coinId.trim()}/historial`);
+    }
+  };
 
   return (
     <button
       onClick={() => {
-        handleShowHistory(coin.id);
+        handleViewHistory();
       }}
     >
       <article

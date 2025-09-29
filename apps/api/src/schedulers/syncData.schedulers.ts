@@ -9,7 +9,7 @@ const initSync = async () => {
 
 export const initSchedulers = async () => { 
   await initSync();  
-  const schedule = process.env.NODE_ENV === 'development' ? '0 0 * * *' : '* * * * *';
+  const schedule = process.env.NODE_ENV === 'development' ? '*/20 * * * *' : '* * * * *';
   cron.schedule(schedule, async () => {
     try {
       console.log('⏳ Iniciando actualización');

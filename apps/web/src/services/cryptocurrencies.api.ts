@@ -1,13 +1,13 @@
 import { apiClient } from '@/api/apiClient';
 import { API_ENDPOINTS } from './endpoints';
-import { Cryptocurrency, Coin, HistoryDataItem } from '@coinmarket/types';
+import {  Coin, HistoryDataItem, CryptocurrencyDB } from '@coinmarket/types';
 
 export async function getCryptocurrencies(): Promise<Coin[]> {
   const { data } = await apiClient.get(API_ENDPOINTS.GET_COINS);
   return data;
 }
 
-export async function getCryptocurrencyById(id: number): Promise<Cryptocurrency> {
+export async function getCryptocurrencyById(id: number): Promise<CryptocurrencyDB> {
   const { data } = await apiClient.get(API_ENDPOINTS.GET_COIN_DETAILS(id));
   return data;
 }

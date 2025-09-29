@@ -5,11 +5,7 @@ import { Coin } from '@coinmarket/types';
 import CoinCard from '@/components/CoinCard';
 import Loading from '@/components/Loading';
 
-export default function Home({
-  handleShowHistory,
-}: {
-  handleShowHistory: (coinId: number) => void;
-}) {
+export default function Home() {
   const { data, loading, execute } = useApi<Coin[]>();
 
   useEffect(() => {
@@ -21,11 +17,7 @@ export default function Home({
   return (
     <div className="flex flex-wrap gap-6 justify-center p-6">
       {data?.map(coin => (
-        <CoinCard
-          coin={coin}
-          key={coin.name}
-          handleShowHistory={handleShowHistory}
-        />
+        <CoinCard coin={coin} key={coin.name} />
       ))}
     </div>
   );
