@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), tailwindcss()],
+    
     define: envVariables,
     resolve: {
       alias: {

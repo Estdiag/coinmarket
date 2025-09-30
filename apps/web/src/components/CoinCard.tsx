@@ -1,27 +1,9 @@
 import { Coin } from '@coinmarket/types';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { formatCurrency, formatLargeNumber } from '@coinmarket/util';
 
 type Props = {
-  coin: Coin;  
-};
-
-const formatCurrency = (value: string | number) => {
-  const num = typeof value === 'string' ? Number(value) : value;
-  if (!isFinite(num)) return '-';
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 2,
-  }).format(num);
-};
-
-const formatLargeNumber = (value: string | number) => {
-  const num = typeof value === 'string' ? Number(value) : value;
-  if (!isFinite(num)) return '-';
-  return new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    maximumFractionDigits: 1,
-  }).format(num);
+  coin: Coin;
 };
 
 const getChangeClass = (valStr: string) => {
@@ -33,43 +15,38 @@ const getChangeClass = (valStr: string) => {
 export default function CoinCard({ coin }: Props) {
   const { name, symbol, price, market_cap, percent_change_24h } = coin;
   const parsedPrice = Number(price);
-  const navigate = useNavigate();
-
-  const handleViewHistory = () => {
-    const coinId = coin.id.toString();
-    if (coinId.trim()) {
-      navigate(`/${coinId.trim()}/historial`);
-    }
-  };
 
   return (
-    <button
-      onClick={() => {
-        handleViewHistory();
-      }}
-    >
+    <Link to={`/${coin.id}/historial`}>
       <article
-        className="w-64 bg-gradient-to-br from-slate-100 via-white to-slate-200 
+        className="w-64 h-60 flex flex-col justify-between bg-gradient-to-br from-slate-100 via-white to-slate-200 
                        dark:from-slate-800 dark:via-slate-900 dark:to-slate-800
                        text-gray-900 dark:text-gray-100
-                       rounded-2xl shadow-md p-5 transition transform hover:scale-105 hover:shadow-xl"
+                       rounded-2xl shadow-md p-5 transition transform hover:scale-105 hover:shadow-xl "
       >
-        <header className="flex items-center gap-3">
+        <header className="flex items-center gap-3 h-1/3">
           <div
-            className="flex items-center justify-center w-12 h-12 rounded-xl 
+            className="flex flex-shrink-0 items-center justify-center w-14 h-14 rounded-xl px-1
                         bg-gradient-to-br from-indigo-500 to-sky-500 text-white font-bold"
           >
-            {symbol}
+            <p
+              className="overflow-hidden text-ellipsis whitespace-nowrap"
+              title={symbol}
+            >
+              {symbol}
+            </p>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold leading-snug">{name}</h3>
+          <div className="flex flex-col min-h-14 justify-between w-full">
+            <h3 className="line-clamp-2 text-lg font-semibold leading-snug uppercase">
+              {name}
+            </h3>
             <p className="text-xs text-gray-500 dark:text-gray-400">{symbol}</p>
           </div>
         </header>
 
         <div className="mt-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">Price</p>
-          <p className="text-2xl font-bold">{formatCurrency(parsedPrice)}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 text-center">Price</p>
+          <p className="text-2xl font-bold text-center">{formatCurrency(parsedPrice)}</p>
         </div>
 
         <div className="mt-4 flex justify-between items-center">
@@ -94,6 +71,6 @@ export default function CoinCard({ coin }: Props) {
           </div>
         </div>
       </article>
-    </button>
+    </Link>
   );
 }
