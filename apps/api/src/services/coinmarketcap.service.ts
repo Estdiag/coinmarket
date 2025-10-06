@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CryptocurrencyApi, CoinMarketCapResponse } from '@coinmarket/types';
+import { CryptocurrencyApi, CoinMarketCapResponse, CoinDetails } from '@coinmarket/types';
 import CryptocurrencyModel from '../models/cryptocurrency.model';
 
 const apiKey = process.env.COINMARKETCAP_API_KEY || '';
@@ -27,13 +27,13 @@ const getCryptos = async (limit: number = 100): Promise<CryptocurrencyApi[]> => 
   }
 };
 
-const fetchCryptocurrencyById = async (id: number): Promise<CryptocurrencyApi> => {
+const fetchCryptocurrencyById = async (id: number): Promise<CoinDetails> => {
   try {
     const response = await axios.get<{
-      data: { [key: string]: CryptocurrencyApi };
-    }>(`${baseURL}/cryptocurrency/quotes/latest`, {
+      data: { [key: string]: CoinDetails };
+    }>(`${baseURL}/cryptocurrency/info?id=${id}`, {
       headers: getHeaders(),
-      params: { id, convert: 'USD' },
+      // params: { id, convert: 'USD' },
     });
     const cryptocurrency = response.data.data[id.toString()];
     if (!cryptocurrency)

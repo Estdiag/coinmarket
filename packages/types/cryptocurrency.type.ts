@@ -1,4 +1,5 @@
-import { CRYPTO_ALIAS, CRYPTO_ATTRIBUTES } from "./constants";
+import { CRYPTO_ALIAS, CRYPTO_ATTRIBUTES } from './constants';
+import { PriceHistoryDB } from './priceHistory.type';
 
 export interface CryptocurrencyApi {
   id: number;
@@ -68,7 +69,18 @@ export type Coin = {
   volume_24h: string;
 };
 
-export interface HistoryDataItem extends CryptocurrencyDB {
-  record_date: string;
-  [CRYPTO_ALIAS]: { [K in typeof CRYPTO_ATTRIBUTES[number]]: string; }
+export interface CoinDetails {
+  id: any;
+  name: string;
+  symbol: string;
+  category: string;
+  description: string;
+  slug: string;
+  logo: string;
+  subreddit: string;
+  notice: string;  
+}
+
+export interface HistoryDataItem extends PriceHistoryDB {
+  [CRYPTO_ALIAS]: { [K in (typeof CRYPTO_ATTRIBUTES)[number]]: string };
 }
